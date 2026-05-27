@@ -49,7 +49,7 @@ class AccountsStream(TigerbeetleStream):
         query_filter = tb.QueryFilter(
             timestamp_min=0,
             timestamp_max=0,
-            limit=1,
+            limit=50,
             flags=0,
             user_data_128=0,
             user_data_64=0,
@@ -62,8 +62,6 @@ class AccountsStream(TigerbeetleStream):
     def _request(
         self, prepared_request: requests.PreparedRequest, context: dict | None, client: tb.ClientSync | None = None
     ) -> requests.Response:
+        self.logger.info(f"Preparing request: {prepared_request}")
         response = client.query_accounts(prepared_request)
         return response
-
-
-#TODO: Add a child stream for accounts transfers

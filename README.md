@@ -18,7 +18,7 @@ This repository contains a partially implemented Singer tap for TigerBeetle. You
 1. **Create test data** — spin up a local TigerBeetle instance, create accounts and transfers so the tap has data to extract.
 2. **Add missing schema fields** to the `AccountsStream` — the current schema only includes a subset of the `Account` fields. Add the rest by looking at TigerBeetle documentation and assigning the correct types.
 3. **Implement pagination** for the `AccountsStream` — the `get_next_page_token` method in `client.py` currently returns `None` (no pagination).
-4. **Create an `AccountTransfersStream`** child stream — this stream should fetch transfers for each account returned by `AccountsStream`. 
+
 You can check examples of similar behavior in our [public tap repositories](https://github.com/hotgluexyz/tap-exact/blob/main/tap_exact/streams.py#L625)
 
 ## Requirements
@@ -55,7 +55,6 @@ Copy or fork this repository into a private repository under your own GitHub acc
 
 - `AccountsStream` with all schema fields both in catalog.json and in the outout data.txt.
 - Pagination implemented in `get_next_page_token` / `prepare_request`.
-- `AccountTransfersStream` child stream in `streams.py` (registered in `tap.py`).
 
 ### 2. Output file — `data.txt`
 
