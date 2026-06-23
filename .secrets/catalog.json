@@ -37,6 +37,48 @@
               "integer",
               "null"
             ]
+          },
+          "user_data_128": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "user_data_64": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "user_data_32": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "ledger": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "code": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "flags": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "timestamp": {
+            "type": [
+              "string",
+              "null"
+            ]
           }
         },
         "type": "object"
@@ -50,42 +92,6 @@
           ],
           "metadata": {
             "inclusion": "automatic"
-          }
-        },
-        {
-          "breadcrumb": [
-            "properties",
-            "debits_pending"
-          ],
-          "metadata": {
-            "inclusion": "available"
-          }
-        },
-        {
-          "breadcrumb": [
-            "properties",
-            "credits_pending"
-          ],
-          "metadata": {
-            "inclusion": "available"
-          }
-        },
-        {
-          "breadcrumb": [
-            "properties",
-            "debits_posted"
-          ],
-          "metadata": {
-            "inclusion": "available"
-          }
-        },
-        {
-          "breadcrumb": [
-            "properties",
-            "credits_posted"
-          ],
-          "metadata": {
-            "inclusion": "available"
           }
         },
         {

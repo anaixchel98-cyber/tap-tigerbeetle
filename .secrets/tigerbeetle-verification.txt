@@ -1,0 +1,46 @@
+TigerBeetle data verification
+Command executed in TigerBeetle REPL: lookup_accounts id=1, id=2, id=3
+
+> lookup_accounts id=1, id=2, id=3;
+{
+  "id": "1",
+  "debits_pending": "0",
+  "debits_posted": "1000",
+  "credits_pending": "0",
+  "credits_posted": "200",
+  "user_data_128": "0",
+  "user_data_64": "0",
+  "user_data_32": "0",
+  "ledger": "700",
+  "code": "10",
+  "flags": [],
+  "timestamp": "1782238665450101601"
+}
+{
+  "id": "2",
+  "debits_pending": "0",
+  "debits_posted": "500",
+  "credits_pending": "0",
+  "credits_posted": "1000",
+  "user_data_128": "0",
+  "user_data_64": "0",
+  "user_data_32": "0",
+  "ledger": "700",
+  "code": "10",
+  "flags": [],
+  "timestamp": "1782238665450101602"
+}
+{
+  "id": "3",
+  "debits_pending": "0",
+  "debits_posted": "200",
+  "credits_pending": "0",
+  "credits_posted": "500",
+  "user_data_128": "0",
+  "user_data_64": "0",
+  "user_data_32": "0",
+  "ledger": "700",
+  "code": "10",
+  "flags": [],
+  "timestamp": "1782238665450101603"
+}

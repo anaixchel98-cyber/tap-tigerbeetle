@@ -1,3 +1,5 @@
 {
-    "start_date": "2000-01-01T00:00:00Z"
+  "start_date": "2000-01-01T00:00:00Z",
+  "cluster_id": 0,
+  "replica_addresses": "3000"
 }
