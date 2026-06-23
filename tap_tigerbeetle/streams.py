@@ -18,27 +18,18 @@ class AccountsStream(TigerbeetleStream):
     path = "/"
     primary_keys = ["id"]
     schema = th.PropertiesList(
-        # TODO: Add the rest of the properties / fields from the API response (types, nested objects, etc.).
-        th.Property(
-            "id",
-            th.StringType,
-        ),
-        th.Property(
-            "debits_pending",
-            th.IntegerType,
-        ),
-        th.Property(
-            "credits_pending",
-            th.IntegerType,
-        ),
-        th.Property(
-            "debits_posted",
-            th.IntegerType,
-        ),
-        th.Property(
-            "credits_posted",
-            th.IntegerType,
-        ),
+        th.Property("id", th.StringType),
+        th.Property("debits_pending", th.IntegerType),
+        th.Property("credits_pending", th.IntegerType),
+        th.Property("debits_posted", th.IntegerType),
+        th.Property("credits_posted", th.IntegerType),
+        th.Property("user_data_128", th.IntegerType),
+        th.Property("user_data_64", th.IntegerType),
+        th.Property("user_data_32", th.IntegerType),
+        th.Property("ledger", th.IntegerType),
+        th.Property("code", th.IntegerType),
+        th.Property("flags", th.IntegerType),
+        th.Property("timestamp", th.StringType),
     ).to_dict()
 
     def prepare_request(
@@ -47,7 +38,7 @@ class AccountsStream(TigerbeetleStream):
         params: dict = self.get_url_params(context, next_page_token)
 
         query_filter = tb.QueryFilter(
-            timestamp_min=0,
+            timestamp_min=next_page_token + 1 if next_page_token else 0,
             timestamp_max=0,
             limit=50,
             flags=0,
