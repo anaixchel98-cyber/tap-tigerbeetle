@@ -34,16 +34,16 @@ Install all the dependencies in a virtual environment using pyproject.toml
 
 The project includes two VS Code debug configurations in `.vscode/launch.json`:
 
-1. **`tap-tigerbeetle discover`** — runs `--discover` to output the stream catalog. You can check the example in the existing .secrets folder. 
+1. **`tap-tigerbeetle discover`** — runs `--discover` to output the stream catalog. You can check the example in the existing .secrets folder.
 2. **`tap-tigerbeetle get`** — runs a full sync using the config, state, and catalog from the `.secrets/` folder.
 
 To run a sync with the debugger:
 
 1. Open VS Code / Cursor in the project root.
-3. Go to **Run and Debug** (Ctrl+Shift+D / Cmd+Shift+D).
-4. Select **`tap-tigerbeetle get`** from the dropdown.
-5. Press **F5** to start.
-6. Set breakpoints in `streams.py` or `client.py` to step through the sync.
+2. Go to **Run and Debug** (Ctrl+Shift+D / Cmd+Shift+D).
+3. Select **`tap-tigerbeetle get`** from the dropdown.
+4. Press **F5** to start.
+5. Set breakpoints in `streams.py` or `client.py` to step through the sync.
 
 Note: the debug configuration sets `"justMyCode": false`, so you can also step into the SDK internals if needed.
 
@@ -76,15 +76,52 @@ Paste the terminal output into a file (e.g. `tigerbeetle-verification.txt`) in t
 
 ## Key files
 
-| File | Purpose |
-| ---- | ------- |
-| `tap_tigerbeetle/tap.py` | Tap class — register streams here |
-| `tap_tigerbeetle/client.py` | Base stream class — TigerBeetle client lifecycle, pagination, response parsing |
-| `tap_tigerbeetle/streams.py` | Stream definitions — `AccountsStream` (and your new `AccountTransfersStream`) |
-| `.vscode/launch.json` | VS Code / Cursor debugger configurations |
-| `.secrets/config.json` | Tap configuration |
-| `.secrets/state.json` | Sync state (bookmarks) |
+| File                         | Purpose                                                                        |
+| ---------------------------- | ------------------------------------------------------------------------------ |
+| `tap_tigerbeetle/tap.py`     | Tap class — register streams here                                              |
+| `tap_tigerbeetle/client.py`  | Base stream class — TigerBeetle client lifecycle, pagination, response parsing |
+| `tap_tigerbeetle/streams.py` | Stream definitions — `AccountsStream` (and your new `AccountTransfersStream`)  |
+| `.vscode/launch.json`        | VS Code / Cursor debugger configurations                                       |
+| `.secrets/config.json`       | Tap configuration                                                              |
+| `.secrets/state.json`        | Sync state (bookmarks)                                                         |
 
 ## License
 
 MIT — see `LICENSE` and `pyproject.toml`.
+
+## Implementation Notes
+
+### Test Data
+
+Created 3 accounts and 3 transfers in a local TigerBeetle instance:
+
+- Account 1 - Account 2: amount 1000
+- Account 2 - Account 3: amount 500
+- Account 3 - Account 1: amount 200
+
+Verification output is available in `.secrets/tigerbeetle-verification.txt`.
+
+### Schema Changes
+
+Added the following missing fields to `AccountsStream` in `streams.py`:
+
+- `user_data_128` (integer)
+- `user_data_64` (integer)
+- `user_data_32` (integer)
+- `ledger` (integer)
+- `code` (integer)
+- `flags` (integer)
+- `timestamp` (string — stored as string to preserve nanosecond precision)
+
+### Pagination
+
+Implemented cursor-based pagination in `client.py` using TigerBeetle's `timestamp_min` field:
+
+- `get_next_page_token` returns the timestamp of the last record in each page
+- `prepare_request` uses `timestamp_min = last_timestamp + 1` to fetch the next page
+- When TigerBeetle returns an empty response, pagination stops
+
+### Windows Setup Notes
+
+The original `launch.json` used Mac/Linux paths. Updated `python` path to:
+`.venv/Scripts/python.exe` for Windows compatibility.
