@@ -125,3 +125,29 @@ Implemented cursor-based pagination in `client.py` using TigerBeetle's `timestam
 
 The original `launch.json` used Mac/Linux paths. Updated `python` path to:
 `.venv/Scripts/python.exe` for Windows compatibility.
+
+## How to Run (Windows)
+
+### Prerequisites
+
+- Python 3.10 (required — the hotglue-singer-sdk is not compatible with Python 3.11+)
+- TigerBeetle binary for Windows
+
+### Setup
+
+```bash
+py -3.10 -m venv .venv
+.venv\Scripts\Activate.ps1
+pip install git+https://github.com/hotgluexyz/HotglueSingerSDK.git
+pip install -e .
+```
+
+### Running the tap
+
+```bash
+# Generate catalog
+python tap_tigerbeetle/tap.py --config .secrets/config.json --discover | Out-File -FilePath .secrets/catalog.json -Encoding utf8
+
+# Run sync
+python tap_tigerbeetle/tap.py --config .secrets/config.json --catalog .secrets/catalog.json --state .secrets/state.json | Out-File -FilePath .secrets/data.txt -Encoding utf8
+```
