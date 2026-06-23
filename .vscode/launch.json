@@ -1,42 +1,34 @@
 {
-    // https://code.visualstudio.com/docs/editor/debugging
-    // Shell redirects (e.g. > catalog.json) are not applied here—args go straight to Python.
-    // After debug, redirect in the integrated terminal if you need files on disk.
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "name": "tap-tigerbeetle discover",
-            "type": "python",
-            "request": "launch",
-            "program": "../tap_tigerbeetle/tap.py",
-            "cwd": "${workspaceFolder}/.secrets",
-            "args": [
-                "--config",
-                "config.json",
-                "--discover",
-                ">",
-                "catalog.json"
-            ],
-            "console": "integratedTerminal",
-            "python": "${workspaceFolder}/.venv/bin/python3"
-        },
-        {
-            "name": "tap-tigerbeetle get",
-            "type": "python",
-            "request": "launch",
-            "justMyCode": false,
-            "program": "../tap_tigerbeetle/tap.py",
-            "cwd": "${workspaceFolder}/.secrets",
-            "args": [
-                "--config",
-                "config.json",
-                "--catalog",
-                "catalog.json",
-                ">",
-                "data.txt"
-            ],
-            "console": "integratedTerminal",
-            "python": "${workspaceFolder}/.venv/bin/python3"
-        }
-    ]
+  // https://code.visualstudio.com/docs/editor/debugging
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "tap-tigerbeetle discover",
+      "type": "python",
+      "request": "launch",
+      "program": "../tap_tigerbeetle/tap.py",
+      "cwd": "${workspaceFolder}/.secrets",
+      "args": ["--config", "config.json", "--discover"],
+      "console": "integratedTerminal",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe"
+    },
+    {
+      "name": "tap-tigerbeetle get",
+      "type": "python",
+      "request": "launch",
+      "justMyCode": false,
+      "program": "../tap_tigerbeetle/tap.py",
+      "cwd": "${workspaceFolder}/.secrets",
+      "args": [
+        "--config",
+        "config.json",
+        "--catalog",
+        "catalog.json",
+        "--state",
+        "state.json"
+      ],
+      "console": "integratedTerminal",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe"
+    }
+  ]
 }

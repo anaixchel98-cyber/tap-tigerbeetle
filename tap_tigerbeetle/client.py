@@ -13,22 +13,21 @@ import tigerbeetle as tb
 import copy
 import os
 
+
 class TigerbeetleStream(RESTStream):
     """Tigerbeetle stream class."""
 
     records_jsonpath = "$[*]"
     url_base = ""
 
-
     def get_next_page_token(
         self,
         response: requests.Response,
         previous_token: Any | None,
     ) -> Any | None:
-        # TODO: Implement pagination
-        next_page_token = None
-
-        return next_page_token
+        if response and len(response) > 0:
+            return response[-1].timestamp
+        return None
 
     def parse_response(self, response: requests.Response) -> Iterable[dict]:
         for record in response:
@@ -49,7 +48,6 @@ class TigerbeetleStream(RESTStream):
         Returns:
             A dictionary of URL query parameters.
         """
-        # TODO: Implement pagination
         params: dict = {}
         return params
 
@@ -72,7 +70,6 @@ class TigerbeetleStream(RESTStream):
         finished = False
         decorated_request = self.request_decorator(self._request)
 
-        # init TB client
         with tb.ClientSync(cluster_id=0, replica_addresses=os.getenv("TB_ADDRESS", "3000")) as client:
             while not finished:
                 prepared_request = self.prepare_request(
@@ -89,5 +86,4 @@ class TigerbeetleStream(RESTStream):
                         f"Loop detected in pagination. "
                         f"Pagination token {next_page_token} is identical to prior token."
                     )
-                # Cycle until get_next_page_token() no longer returns a value
                 finished = not next_page_token

@@ -131,3 +131,10 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# TigerBeetle local files
+*.tigerbeetle
+tigerbeetle.exe
+
+# Hotglue exception logs
+hg-tap-exception-*.json
